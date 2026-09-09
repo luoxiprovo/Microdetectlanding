@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Each scheduled run should create one Chinese MDX file and one English MDX file for the next incomplete topic, unless only one MDX slot remains before targetTotalMdxFiles.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-09-04",
+  "updatedAt": "2026-09-09",
   "completedFiles": [
     {
       "topicId": 1,
@@ -208,6 +208,22 @@
       "title": "Can Solar Power Support Long-Term Unattended Radar Monitoring Stations? Design and Deployment Guide",
       "completedAt": "2026-09-04",
       "coverImage": "/insights/en-can-solar-power-support-unattended-radar-monitoring.png"
+    },
+    {
+      "topicId": 15,
+      "language": "zh-CN",
+      "file": "radar-monitoring-data-cloud-platform.mdx",
+      "title": "雷达监测数据如何接入云平台？从现场采集到可追溯告警的工程指南",
+      "completedAt": "2026-09-09",
+      "coverImage": "/insights/radar-monitoring-data-cloud-platform.png"
+    },
+    {
+      "topicId": 15,
+      "language": "en",
+      "file": "en-how-radar-monitoring-data-connects-cloud-platform.mdx",
+      "title": "How Radar Monitoring Data Connects to Cloud Platforms: An Engineering Guide",
+      "completedAt": "2026-09-09",
+      "coverImage": "/insights/en-how-radar-monitoring-data-connects-cloud-platform.png"
     }
   ],
   "topics": [
@@ -353,7 +369,12 @@
       "id": 15,
       "zhTitle": "雷达监测数据如何接入云平台",
       "enTitle": "How radar monitoring data connects to cloud platforms",
-      "status": "pending"
+      "status": "completed",
+      "zhFile": "radar-monitoring-data-cloud-platform.mdx",
+      "enFile": "en-how-radar-monitoring-data-connects-cloud-platform.mdx",
+      "zhCoverImage": "/insights/radar-monitoring-data-cloud-platform.png",
+      "enCoverImage": "/insights/en-how-radar-monitoring-data-connects-cloud-platform.png",
+      "completedAt": "2026-09-09"
     },
     {
       "id": 16,
