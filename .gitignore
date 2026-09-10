@@ -1,8 +1,27 @@
-node_modules
-.next
-.pnpm-store
+# Dependencies and build outputs
+node_modules/
+.next/
+.pnpm-store/
+dist/
+build/
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
 .env*.local
+
+# Operating-system files
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local QA artifacts
 landing_*_check*.png
 insight*_desktop_check.png
 insights_desktop_check.png
