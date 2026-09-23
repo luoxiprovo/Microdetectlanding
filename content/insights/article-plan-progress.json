@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Each scheduled run should create one Chinese MDX file and one English MDX file for the next incomplete topic, unless only one MDX slot remains before targetTotalMdxFiles.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-09-16",
+  "updatedAt": "2026-09-23",
   "completedFiles": [
     {
       "topicId": 1,
@@ -226,6 +226,26 @@
       "title": "Why River Velocity and Water Level Should Be Monitored Together: An Engineering Guide",
       "completedAt": "2026-09-16",
       "coverImage": "/insights/en-river-velocity-water-level-joint-monitoring.png"
+    },
+    {
+      "topicId": 17,
+      "language": "zh-CN",
+      "file": "urban-drainage-non-contact-radar-selection.mdx",
+      "title": "城市排水监测如何选择非接触式雷达设备？从工况到验收的工程指南",
+      "completedAt": "2026-09-23",
+      "coverImage": "/insights/urban-drainage-non-contact-radar-selection.png",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-09-23"
+    },
+    {
+      "topicId": 17,
+      "language": "en",
+      "file": "en-choosing-non-contact-radar-urban-drainage-monitoring.mdx",
+      "title": "Choosing Non-Contact Radar Devices for Urban Drainage Monitoring: An Engineering Guide",
+      "completedAt": "2026-09-23",
+      "coverImage": "/insights/en-choosing-non-contact-radar-urban-drainage-monitoring.png",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-09-23"
     }
   ],
   "topics": [
@@ -393,7 +413,14 @@
       "id": 17,
       "zhTitle": "城市排水监测如何选择非接触式雷达设备",
       "enTitle": "Choosing non-contact radar devices for urban drainage monitoring",
-      "status": "pending"
+      "status": "completed",
+      "zhFile": "urban-drainage-non-contact-radar-selection.mdx",
+      "zhCoverImage": "/insights/urban-drainage-non-contact-radar-selection.png",
+      "enFile": "en-choosing-non-contact-radar-urban-drainage-monitoring.mdx",
+      "enCoverImage": "/insights/en-choosing-non-contact-radar-urban-drainage-monitoring.png",
+      "completedAt": "2026-09-23",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-09-23"
     },
     {
       "id": 18,
