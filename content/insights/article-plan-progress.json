@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Each scheduled run should create one Chinese MDX file and one English MDX file for the next incomplete topic, unless only one MDX slot remains before targetTotalMdxFiles.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-09-23",
+  "updatedAt": "2026-09-30",
   "completedFiles": [
     {
       "topicId": 1,
@@ -246,6 +246,26 @@
       "coverImage": "/insights/en-choosing-non-contact-radar-urban-drainage-monitoring.png",
       "coverWorkflow": "local-deterministic-stdlib",
       "coverGeneratedAt": "2026-09-23"
+    },
+    {
+      "topicId": 18,
+      "language": "zh-CN",
+      "file": "flash-flood-warning-radar-velocity-meter-deployment.mdx",
+      "title": "山洪预警项目中雷达水流速计如何部署？从站点踏勘到预警运行的工程指南",
+      "completedAt": "2026-09-30",
+      "coverImage": "/insights/flash-flood-warning-radar-velocity-meter-deployment.png",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-09-30"
+    },
+    {
+      "topicId": 18,
+      "language": "en",
+      "file": "en-deploying-radar-flow-velocity-meters-flash-flood-warning.mdx",
+      "title": "Deploying Radar Flow Velocity Meters for Flash Flood Warning Projects: An Engineering Guide",
+      "completedAt": "2026-09-30",
+      "coverImage": "/insights/en-deploying-radar-flow-velocity-meters-flash-flood-warning.png",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-09-30"
     }
   ],
   "topics": [
@@ -426,7 +446,14 @@
       "id": 18,
       "zhTitle": "山洪预警项目中雷达水流速计如何部署",
       "enTitle": "Deploying radar flow velocity meters for flash flood warning projects",
-      "status": "pending"
+      "status": "completed",
+      "zhFile": "flash-flood-warning-radar-velocity-meter-deployment.mdx",
+      "zhCoverImage": "/insights/flash-flood-warning-radar-velocity-meter-deployment.png",
+      "enFile": "en-deploying-radar-flow-velocity-meters-flash-flood-warning.mdx",
+      "enCoverImage": "/insights/en-deploying-radar-flow-velocity-meters-flash-flood-warning.png",
+      "completedAt": "2026-09-30",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-09-30"
     },
     {
       "id": 19,
