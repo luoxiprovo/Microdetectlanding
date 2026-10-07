@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Each scheduled run should create one Chinese MDX file and one English MDX file for the next incomplete topic, unless only one MDX slot remains before targetTotalMdxFiles.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-09-30",
+  "updatedAt": "2026-10-07",
   "completedFiles": [
     {
       "topicId": 1,
@@ -266,6 +266,26 @@
       "coverImage": "/insights/en-deploying-radar-flow-velocity-meters-flash-flood-warning.png",
       "coverWorkflow": "local-deterministic-stdlib",
       "coverGeneratedAt": "2026-09-30"
+    },
+    {
+      "topicId": 19,
+      "language": "zh-CN",
+      "file": "irrigation-canal-online-velocity-monitoring.mdx",
+      "title": "灌溉渠道流量计量为什么需要在线流速监测？从取水计量到调度核算的工程指南",
+      "completedAt": "2026-10-07",
+      "coverImage": "/insights/irrigation-canal-online-velocity-monitoring.png",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-10-07"
+    },
+    {
+      "topicId": 19,
+      "language": "en",
+      "file": "en-why-irrigation-canal-flow-metering-needs-online-velocity-monitoring.mdx",
+      "title": "Why Irrigation Canal Flow Metering Needs Online Velocity Monitoring: An Engineering Guide",
+      "completedAt": "2026-10-07",
+      "coverImage": "/insights/en-why-irrigation-canal-flow-metering-needs-online-velocity-monitoring.png",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-10-07"
     }
   ],
   "topics": [
@@ -459,7 +479,14 @@
       "id": 19,
       "zhTitle": "灌溉渠道流量计量为什么需要在线流速监测",
       "enTitle": "Why irrigation canal flow metering needs online velocity monitoring",
-      "status": "pending"
+      "status": "completed",
+      "zhFile": "irrigation-canal-online-velocity-monitoring.mdx",
+      "zhCoverImage": "/insights/irrigation-canal-online-velocity-monitoring.png",
+      "enFile": "en-why-irrigation-canal-flow-metering-needs-online-velocity-monitoring.mdx",
+      "enCoverImage": "/insights/en-why-irrigation-canal-flow-metering-needs-online-velocity-monitoring.png",
+      "completedAt": "2026-10-07",
+      "coverWorkflow": "local-deterministic-stdlib",
+      "coverGeneratedAt": "2026-10-07"
     },
     {
       "id": 20,
