@@ -1,11 +1,11 @@
 {
   "program": "MicroDetectLanding bilingual insights article plan",
   "repo": "https://github.com/RWAValueRouter/MicroDetectLanding.git",
-  "targetTotalMdxFiles": 36,
+  "targetTotalMdxFiles": 138,
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Each scheduled run should create one Chinese MDX file and one English MDX file for the next incomplete topic, unless only one MDX slot remains before targetTotalMdxFiles.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-10-07",
+  "updatedAt": "2026-10-28",
   "completedFiles": [
     {
       "topicId": 1,
@@ -589,10 +589,383 @@
       "zhTitle": "从单台传感器到在线监测系统的建设路径",
       "enTitle": "Building from a single sensor to a complete online monitoring system",
       "status": "pending"
+    },
+    {
+      "id": 37,
+      "zhTitle": "体育雷达为何从测速枪走向毫米波成像与追踪",
+      "enTitle": "Why sports radar is moving from speed guns to millimeter-wave imaging and tracking",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 38,
+      "zhTitle": "24GHz、60GHz 与 77GHz 体育雷达如何选择",
+      "enTitle": "Choosing 24 GHz, 60 GHz, and 77 GHz radar for sports applications",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 39,
+      "zhTitle": "FMCW 毫米波雷达如何测量球速、发射角与旋转特征",
+      "enTitle": "How FMCW millimeter-wave radar measures ball speed, launch angle, and spin-related features",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 40,
+      "zhTitle": "MIMO 天线阵列如何提升体育场景的角度分辨率",
+      "enTitle": "How MIMO antenna arrays improve angular resolution in sports settings",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 41,
+      "zhTitle": "多目标跟踪如何区分球、运动员与背景反射",
+      "enTitle": "How multi-target tracking separates balls, athletes, and background reflections",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 42,
+      "zhTitle": "微多普勒特征如何用于运动动作识别",
+      "enTitle": "Using micro-Doppler signatures for athletic motion recognition",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 43,
+      "zhTitle": "棒球击球分析中的毫米波雷达产品设计要点",
+      "enTitle": "Millimeter-wave radar product design for baseball hitting analysis",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 44,
+      "zhTitle": "高尔夫发射监测器如何利用毫米波雷达估算球路",
+      "enTitle": "How golf launch monitors use millimeter-wave radar to estimate ball flight",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 45,
+      "zhTitle": "网球发球与回球追踪的毫米波雷达挑战",
+      "enTitle": "Millimeter-wave radar challenges for tennis serve and rally tracking",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 46,
+      "zhTitle": "足球训练中毫米波雷达如何支持射门与跑动分析",
+      "enTitle": "How millimeter-wave radar supports shot and running analysis in football training",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 47,
+      "zhTitle": "板球球速与落点测量中的雷达系统设计",
+      "enTitle": "Radar system design for cricket ball-speed and bounce-location measurement",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 48,
+      "zhTitle": "冰球高速小目标追踪为什么困难",
+      "enTitle": "Why high-speed small-target tracking is difficult in ice hockey",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 49,
+      "zhTitle": "室内篮球场毫米波雷达如何应对多径反射",
+      "enTitle": "How indoor basketball radar handles multipath reflections",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 50,
+      "zhTitle": "体育馆部署雷达时如何进行现场标定",
+      "enTitle": "Field calibration practices for radar deployments in sports venues",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 51,
+      "zhTitle": "毫米波雷达与摄像机融合如何提高体育追踪可靠性",
+      "enTitle": "How millimeter-wave radar and camera fusion improves sports-tracking reliability",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 52,
+      "zhTitle": "体育雷达的边缘 AI 推理如何平衡延迟与功耗",
+      "enTitle": "Balancing latency and power in edge-AI inference for sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 53,
+      "zhTitle": "可穿戴设备与场边雷达如何协同分析运动表现",
+      "enTitle": "Combining wearables and sideline radar for athlete-performance analysis",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 54,
+      "zhTitle": "面向青少年训练的低成本体育雷达产品如何定义",
+      "enTitle": "Defining low-cost sports-radar products for youth training",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 55,
+      "zhTitle": "消费级体育雷达为何需要更好的安装引导与反馈设计",
+      "enTitle": "Why consumer sports radar needs better setup guidance and feedback design",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 56,
+      "zhTitle": "电池供电体育雷达的续航、热管理与防护取舍",
+      "enTitle": "Battery life, thermal management, and protection tradeoffs in portable sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 57,
+      "zhTitle": "体育雷达如何在雨雾与强光环境下保持可用性",
+      "enTitle": "Keeping sports radar usable in rain, fog, and strong-light conditions",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 58,
+      "zhTitle": "球网、围栏和看台对体育雷达性能有什么影响",
+      "enTitle": "How nets, fences, and stands affect sports-radar performance",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 59,
+      "zhTitle": "毫米波雷达如何降低误触发与虚警",
+      "enTitle": "How millimeter-wave radar reduces false triggers and false alarms",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 60,
+      "zhTitle": "体育雷达的速度精度应如何验证",
+      "enTitle": "How to validate speed accuracy in sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 61,
+      "zhTitle": "从原始 I/Q 数据到运动指标：体育雷达信号处理链路",
+      "enTitle": "From raw I/Q data to motion metrics: the sports-radar signal-processing chain",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 62,
+      "zhTitle": "体育雷达中的距离-多普勒图与角度估计如何解读",
+      "enTitle": "Interpreting range-Doppler maps and angle estimation in sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 63,
+      "zhTitle": "训练反馈产品如何把雷达数据转化为可执行建议",
+      "enTitle": "Turning radar data into actionable coaching guidance",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 64,
+      "zhTitle": "体育雷达中的隐私、数据权属与青少年保护",
+      "enTitle": "Privacy, data ownership, and youth protection in sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 65,
+      "zhTitle": "体育赛事雷达部署需要考虑哪些无线电合规问题",
+      "enTitle": "Radio-compliance considerations for sports-event radar deployments",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 66,
+      "zhTitle": "体育雷达产品如何选择云端、手机端与本地显示架构",
+      "enTitle": "Choosing cloud, mobile, and local-display architectures for sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 67,
+      "zhTitle": "体育雷达的数据接口如何与训练管理系统集成",
+      "enTitle": "Integrating sports-radar data interfaces with training-management systems",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 68,
+      "zhTitle": "体育雷达如何支持远程教练与异地训练复盘",
+      "enTitle": "How sports radar supports remote coaching and distributed training review",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 69,
+      "zhTitle": "体育雷达产品如何设计多人同时训练模式",
+      "enTitle": "Designing multi-athlete training modes for sports-radar products",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 70,
+      "zhTitle": "从单一测速功能到订阅型训练平台的产品路径",
+      "enTitle": "The product path from single speed measurement to a subscription training platform",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 71,
+      "zhTitle": "体育雷达厂商的算法、数据与工作流护城河",
+      "enTitle": "Algorithm, data, and workflow moats for sports-radar vendors",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 72,
+      "zhTitle": "体育雷达与计算机视觉方案如何比较",
+      "enTitle": "Comparing sports radar with computer-vision solutions",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 73,
+      "zhTitle": "体育雷达与 UWB 定位方案如何互补",
+      "enTitle": "How sports radar and UWB positioning complement each other",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 74,
+      "zhTitle": "体育雷达在职业队、学院与大众市场的产品差异",
+      "enTitle": "Product differences for professional teams, academies, and consumer sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 75,
+      "zhTitle": "体育雷达设备的制造测试与量产校准",
+      "enTitle": "Manufacturing test and production calibration for sports-radar devices",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 76,
+      "zhTitle": "体育雷达现场服务、固件更新与售后运维",
+      "enTitle": "Field service, firmware updates, and post-sale operations for sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 77,
+      "zhTitle": "毫米波芯片平台如何影响体育雷达的成本与路线图",
+      "enTitle": "How millimeter-wave chip platforms shape sports-radar cost and roadmaps",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 78,
+      "zhTitle": "体育雷达产品的市场进入策略：先从哪个运动切入",
+      "enTitle": "Sports-radar go-to-market strategy: which sport to enter first",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 79,
+      "zhTitle": "体育雷达的商业模式：硬件销售、租赁与 SaaS",
+      "enTitle": "Sports-radar business models: hardware sales, rental, and SaaS",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 80,
+      "zhTitle": "体育雷达如何构建可解释的训练指标体系",
+      "enTitle": "Building explainable training metrics with sports radar",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 81,
+      "zhTitle": "体育雷达用于伤病风险监测时有哪些边界",
+      "enTitle": "Boundaries for using sports radar in injury-risk monitoring",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 82,
+      "zhTitle": "面向场馆运营的毫米波雷达：训练、管理与安全的协同价值",
+      "enTitle": "Millimeter-wave radar for venue operations: combined value in training, management, and safety",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 83,
+      "zhTitle": "体育雷达数据质量监控与漂移检测",
+      "enTitle": "Sports-radar data-quality monitoring and drift detection",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 84,
+      "zhTitle": "开放数据集与仿真如何加速体育雷达算法开发",
+      "enTitle": "How open datasets and simulation accelerate sports-radar algorithm development",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 85,
+      "zhTitle": "体育雷达的测试基准：如何建立可重复的验证场景",
+      "enTitle": "Sports-radar test benchmarks: building repeatable validation scenarios",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 86,
+      "zhTitle": "体育雷达如何通过 OTA 更新持续改进性能",
+      "enTitle": "How over-the-air updates can continuously improve sports-radar performance",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 87,
+      "zhTitle": "下一代体育雷达：成像、感知融合与个性化训练",
+      "enTitle": "Next-generation sports radar: imaging, sensor fusion, and personalized training",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
+    },
+    {
+      "id": 88,
+      "zhTitle": "体育雷达项目从概念验证到规模化部署的路线图",
+      "enTitle": "A roadmap from sports-radar proof of concept to scaled deployment",
+      "status": "pending",
+      "program": "sports-radar-2026-2027"
     }
   ],
   "coverImageRequired": true,
   "coverImageDirectory": "public/insights",
   "coverImageMetaField": "coverImage",
-  "coverImageWorkflow": "For every newly generated MDX article, create a matching PNG cover image in public/insights and add coverImage: \"/insights/<image-name>.png\" to the exported meta object."
+  "coverImageWorkflow": "For every newly generated MDX article, create a matching PNG cover image in public/insights and add coverImage: \"/insights/<image-name>.png\" to the exported meta object.",
+  "sportsRadarProgram": {
+    "topicIdRange": [
+      37,
+      88
+    ],
+    "editionCount": 52,
+    "scope": "Millimeter-wave radar technology and product topics for sports radar, published as bilingual Chinese and English MDX article pairs after the preserved existing backlog.",
+    "addedAt": "2026-10-28"
+  }
 }
