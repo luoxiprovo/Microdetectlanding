@@ -1,7 +1,7 @@
 {
   "program": "MicroDetectLanding bilingual insights article plan",
   "repo": "https://github.com/RWAValueRouter/MicroDetectLanding.git",
-  "targetTotalMdxFiles": 138,
+  "targetTotalMdxFiles": 172,
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Each scheduled run should create one Chinese MDX file and one English MDX file for the next incomplete topic, unless only one MDX slot remains before targetTotalMdxFiles.",
   "contentDirectory": "content/insights",
