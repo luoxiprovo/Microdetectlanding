@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Each scheduled run should create one Chinese MDX file and one English MDX file for the next incomplete topic, unless only one MDX slot remains before targetTotalMdxFiles.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-10-28",
+  "updatedAt": "2026-11-01",
   "completedFiles": [
     {
       "topicId": 1,
@@ -286,6 +286,24 @@
       "coverImage": "/insights/en-why-irrigation-canal-flow-metering-needs-online-velocity-monitoring.png",
       "coverWorkflow": "local-deterministic-stdlib",
       "coverGeneratedAt": "2026-10-07"
+    },
+    {
+      "topicId": 37,
+      "language": "zh-CN",
+      "file": "sports-radar-from-speed-guns-to-mmwave-tracking.mdx",
+      "title": "体育雷达为何从测速枪走向毫米波成像与追踪",
+      "completedAt": "2026-11-01",
+      "coverImage": "/insights/sports-radar-from-speed-guns-to-mmwave-tracking.png",
+      "coverWorkflow": "local-deterministic-pillow"
+    },
+    {
+      "topicId": 37,
+      "language": "en",
+      "file": "en-sports-radar-from-speed-guns-to-mmwave-tracking.mdx",
+      "title": "Why sports radar is moving from speed guns to millimeter-wave imaging and tracking",
+      "completedAt": "2026-11-01",
+      "coverImage": "/insights/en-sports-radar-from-speed-guns-to-mmwave-tracking.png",
+      "coverWorkflow": "local-deterministic-pillow"
     }
   ],
   "topics": [
@@ -594,8 +612,13 @@
       "id": 37,
       "zhTitle": "体育雷达为何从测速枪走向毫米波成像与追踪",
       "enTitle": "Why sports radar is moving from speed guns to millimeter-wave imaging and tracking",
-      "status": "pending",
-      "program": "sports-radar-2026-2027"
+      "status": "completed",
+      "program": "sports-radar-2026-2027",
+      "zhFile": "sports-radar-from-speed-guns-to-mmwave-tracking.mdx",
+      "enFile": "en-sports-radar-from-speed-guns-to-mmwave-tracking.mdx",
+      "zhCoverImage": "/insights/sports-radar-from-speed-guns-to-mmwave-tracking.png",
+      "enCoverImage": "/insights/en-sports-radar-from-speed-guns-to-mmwave-tracking.png",
+      "completedAt": "2026-11-01"
     },
     {
       "id": 38,
