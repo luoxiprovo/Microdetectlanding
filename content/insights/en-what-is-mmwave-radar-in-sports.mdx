@@ -1,0 +1,71 @@
+export const meta = {
+  "title": "What Is Millimeter-Wave Radar—and Why Does It Matter in Sports?",
+  "description": "An introduction to sports radar: the measurement chain, sprint-testing geometry, validation, and the difference between a sensor demonstration and a useful coaching metric.",
+  "coverImage": "/insights/en-what-is-mmwave-radar-in-sports.png",
+  "date": "2026-11-01",
+  "category": "Sports Radar",
+  "tags": [
+    "sports radar",
+    "mmWave",
+    "measurement",
+    "validation"
+  ],
+  "readingTime": "5 min read"
+};
+
+# What Is Millimeter-Wave Radar—and Why Does It Matter in Sports?
+
+A coach asks a simple question: did that athlete get faster? A radar may help answer it, but only if the measurement matches the question. A number on a screen is useful when we know what moved, which direction it moved, and how the number was checked.
+
+This first article in our 52-part sports series introduces the measurement chain. It describes general technology and proposed evaluation methods, rather than announcing a validated MicroDetect sports product.
+
+## A sensor that listens to reflections
+
+Millimeter-wave radar transmits radio signals and processes the returning reflections. FMCW sensors vary the transmitted frequency over time. Processing these returns can estimate target distance, motion toward or away from the sensor, and arrival direction. Texas Instruments introduces these principles in its [FMCW range-estimation training](https://www.ti.com/video/5415203482001).
+
+A detected reflection is not automatically a named athlete or a ball trajectory. Software must identify relevant returns and connect them across successive observations. A sports metric sits further along that chain: signals, detections, tracks, then interpretation.
+
+## Start with one sports question
+
+Consider a proposed sprint-training pilot. The question might be whether an athlete reaches a higher peak speed in a defined straight-line drill. Before choosing hardware, define the measurement zone, the speed metric, and the comparison method.
+
+Instantaneous radar speed and a timing gate's average speed over a distance are different quantities. They can disagree even when neither instrument is malfunctioning. Compare results over matched time windows and describe the metric explicitly.
+
+Treat this sprint example as an evaluation proposal. It is not evidence that a particular sensor or software configuration has already been validated for sprint testing.
+
+## Why geometry matters
+
+Doppler speed follows motion along the radar's line of sight. If an athlete crosses the beam at an angle, that component differs from the athlete's total speed. Alignment therefore belongs in the test record, alongside mounting height, distance, and the section of the drill being analyzed.
+
+This is also why moving a sensor between sessions can change the result. Mark the installation position and repeat the same drill geometry before interpreting a difference as athletic improvement.
+
+## A people-detection demo is not a ball tracker
+
+MathWorks provides a [worked radar-processing example](https://www.mathworks.com/help/radar/ug/iq-data-collection-detection-application-example.html) with configurable waveform parameters and controlled reflector observations. It shows why a configuration must be chosen for the target and operating range; its people-detection setup is not a ready-made sports-ball configuration.
+
+For a sports pilot, ask the supplier to demonstrate the exact drill. A successful walking-person demonstration does not establish performance for a fast ball, a swinging racket, or several athletes moving together. State which output is directly estimated and which is calculated by a model.
+
+## A practical first evaluation
+
+The following is our proposed pilot procedure, not a published test result:
+
+- Choose one drill and one primary metric; avoid combining sprint speed, technique scoring, and fatigue assessment in the first trial.
+- Record the sensor model, firmware, configuration, mounting geometry, and conditions.
+- Select a suitable reference measurement and synchronize it with the radar record.
+- Repeat trials across the intended operating conditions and retain misses and invalid readings.
+- Report the error distribution, missing-data rate, and usable measurement zone, alongside the displayed result.
+
+Agree on the acceptable error before reviewing the trial. A repeatable number can still be consistently biased. A useful decision rule might require a measured change to exceed the established uncertainty before a coach treats it as improvement.
+
+## What this series will examine
+
+We will move from measurement fundamentals into sport-specific applications, datasets, validation, and deployment. Demonstrated capabilities, experimental research, and proposed applications will be identified separately. Claims about spin, fatigue, injury risk, or rehabilitation need evidence for the specific metric and population.
+
+For a first project, bring a clearly defined drill and reference method to the discussion. That gives a supplier a concrete task to validate and gives a coach a result that can be interpreted.
+
+## Sources and scope
+
+- [Texas Instruments: Introduction to mmWave Sensing, Module 1](https://www.ti.com/video/5415203482001) — foundation for the radar measurement explanation.
+- [MathWorks: I/Q Data Collection and Detection Generation](https://www.mathworks.com/help/radar/ug/iq-data-collection-detection-application-example.html) — an implementation example, not sports-performance validation.
+
+The pilot recommendations are editorial proposals. No athlete trial, product accuracy result, or medical conclusion is reported here.
