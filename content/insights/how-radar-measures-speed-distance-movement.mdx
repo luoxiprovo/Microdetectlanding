@@ -1,0 +1,90 @@
+export const meta = {
+  "title": "雷达如何测量速度、距离与运动",
+  "description": "通过角度与带宽计算，理解 FMCW 雷达的距离、径向速度和运动轨迹，明确测量边界与体育场景验证方法。",
+  "coverImage": "/insights/how-radar-measures-speed-distance-movement.png",
+  "date": "2026-11-02",
+  "category": "体育雷达",
+  "tags": [
+    "体育雷达",
+    "FMCW",
+    "径向速度",
+    "距离测量",
+    "验证"
+  ],
+  "readingTime": "7 分钟阅读"
+};
+
+# 雷达如何测量速度、距离与运动
+
+球明明飞得很快，雷达显示的速度却偏低；运动员正在横向移动，与传感器的距离却几乎没有变化。这两种情况不一定说明设备出了问题，可能只是传感器与教练描述的不是同一个运动量。
+
+体育雷达系列第 2 篇将区分三个问题：目标离雷达多远？这个距离变化得多快？目标实际沿什么路径运动？
+
+## 距离：从延迟回波中提取量程信息
+
+FMCW 雷达发射称为 chirp 的扫频信号。回波到达时，已经比发射信号晚了一段时间。将接收信号与参考信号混频，可以得到包含距离信息的拍频。TI 的[基础白皮书](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf)介绍了这条测量链路。
+
+对于理想静止点目标和线性扫频，简化关系为 `R = c × f_b / (2 × S)`。R 表示距离，c 表示传播速度，f_b 表示拍频，S 表示扫频斜率。分母中的 2 来自信号往返传播。
+
+在体育场景中，这个距离是雷达到反射目标的距离，不会自动等于球已经飞过的路程、离地高度或距球门的距离。后面这些量需要合适的坐标系，必要时还需要角度观测。
+
+运动目标也会给拍频带来多普勒分量。MathWorks 的[数据处理示例](https://www.mathworks.com/help/radar/ug/iq-data-collection-detection-application-example.html)说明了距离与多普勒耦合：忽略它可能造成测距偏差。面向高速球的设计，需要按自身波形与速度范围评估这一影响。
+
+## 速度：先理解沿视线方向的分量
+
+常见的 FMCW 测速方法会处理连续 chirp 之间的相位变化。Infineon 的[信号处理说明](https://community.infineon.com/t5/Knowledge-Base-Articles/Understanding-radar-signal-processing-An-overview-for-Infineon-XENSIV-radar/ta-p/833659)介绍了这一过程和速度模糊边界。
+
+对于固定的单基地雷达，多普勒描述的是目标朝向或远离传感器的径向运动。在理想直线运动中，径向速度大小满足 `|v_r| = v × |cos(theta)|`。theta 是速度矢量与从雷达指向目标的视线之间的夹角。正负值代表接近还是远离，应以设备约定为准。
+
+假设一颗球以 100 km/h 远离雷达，运动方向与视线存在 30 度夹角，径向速度约为 **86.6 km/h**。这是几何计算，不是设备性能测试。运动瞬间如果恰好与视线垂直，径向速度可以为零，而横向速度仍然很大。
+
+不能随意用假设的角度给所有读数做余弦补偿。这种修正需要可靠的方向估计，且在接近垂直运动时会变得不稳定。安装几何关系和目标识别仍需验证。
+
+## 运动轨迹：把不同时刻的观测关联起来
+
+距离和径向速度描述一次检测。建立轨迹则需要跨时间关联，并判断哪些检测属于同一个物体。角度信息可以帮助确定空间位置，追踪过程还会增加关联与估计。
+
+例如，同一次击球中，球、球拍与运动员都可能在移动。屏幕上出现平滑曲线，并不能证明系统持续观测到了球。应要求供应商区分原始观测点、滤波后的位置、漏测期间的预测，以及模型推算出的后续轨迹。
+
+MathWorks 的[距离—多普勒处理指南](https://www.mathworks.com/help/phased/ug/range-doppler-response.html)介绍了如何按距离和径向速度组织回波。这样的图有助于分离回波，但它本身不能识别某个运动员，也不等于已经建立完整三维轨迹。
+
+## 四类指标应分别询问
+
+采购时，不宜把一个醒目的参数当成完整的测量能力：
+
+- **距离分辨率：** 能否区分距离相近的不同目标。
+- **测距准确度：** 报告的距离与适当参考值有多接近。
+- **无模糊速度范围：** 在所选配置下，径向速度不会发生尚未消除的多普勒折叠的范围。
+- **更新率与延迟：** 多久输出一次结果，以及显示结果所依据的观测已经过去多久。
+
+MathWorks 区分了[准确度、偏差与分辨率](https://www.mathworks.com/help/radar/ug/measurement-accuracy-bias-and-resolution.html)。在理想带宽关系下，`delta_R = c / (2 × B)`。取 c 约为每秒 3 亿米，假设扫频带宽为 4 GHz，可计算出 **3.75 cm** 的标称距离分辨率。它既不能证明位置准确度就是 3.75 cm，也不能保证任何两颗体育用球都能被分开。
+
+显示更多小数位，也不能证明测量不确定性更小。
+
+## 一次体育验证可以怎样设计
+
+以下是本文建议的验证程序，不是已经完成的实验。首次测试可以从一种球、一条通道和一个主要输出开始。
+
+1. **定义测量量。** 明确测的是指定位置的径向速度、由已验证轨迹得到的总速度，还是某一事件时刻的距离。出手速度、峰值速度与一段路程的平均速度，不能悄悄替换。
+2. **匹配参照方法。** 使用合适、经过标定的对照设备或同步参考系统。两个计时门给出的是区间平均速度，应与雷达同一区间的量比较，不能直接当成某一瞬间的速度。
+3. **记录几何关系。** 保留安装位置、方向、测量空间、固件、波形配置以及参照设备的对齐记录。
+4. **覆盖使用边界。** 测试预期的距离、方向、速度与干扰条件。如果设备需要移动使用，还应测试重新安装后的结果。
+5. **保留失败样本。** 报告无效读数、漏测、关联错误、误差分布与延迟。验收标准应在查看结果之前约定。
+
+对训练决策而言，应判断变化是否足以与测量不确定性区分。如果安装几何、配置或指标定义发生变化，应先建立可比性，再把差异解释为能力提升。
+
+## 哪些已有依据，哪些仍需验证
+
+所引资料说明了通用 FMCW 原理与实现方法。本文角度与带宽示例属于理想计算，体育测试属于验证方案建议。这里没有报告新的运动员数据集、体育实验结果或经过验证的析微探物产品参数。
+
+实际使用时，应准确标注每个输出：距离、径向速度、追踪位置，或由此计算的训练指标。下一篇将比较雷达、摄像头与可穿戴设备分别能为体育测量提供什么。
+
+## 参考资料与延伸阅读
+
+1. [Texas Instruments：The fundamentals of millimeter wave radar sensors](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf)。
+2. [Infineon：Understanding radar signal processing](https://community.infineon.com/t5/Knowledge-Base-Articles/Understanding-radar-signal-processing-An-overview-for-Infineon-XENSIV-radar/ta-p/833659)。
+3. [MathWorks：I/Q Data Collection and Detection Generation](https://www.mathworks.com/help/radar/ug/iq-data-collection-detection-application-example.html)。
+4. [MathWorks：Range-Doppler Response](https://www.mathworks.com/help/phased/ug/range-doppler-response.html)。
+5. [MathWorks：Measurement Accuracy, Bias, and Resolution](https://www.mathworks.com/help/radar/ug/measurement-accuracy-bias-and-resolution.html)。
+
+[阅读第 1 篇：什么是毫米波雷达？](/insights/what-is-mmwave-radar-in-sports)

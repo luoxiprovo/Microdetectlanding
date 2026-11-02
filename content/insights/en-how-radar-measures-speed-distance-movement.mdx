@@ -1,0 +1,90 @@
+export const meta = {
+  "title": "How Radar Measures Speed, Distance, and Movement",
+  "description": "Understand FMCW range, radial speed, and tracked movement in sports, with angle and bandwidth calculations, measurement limits, and a practical validation procedure.",
+  "coverImage": "/insights/en-how-radar-measures-speed-distance-movement.png",
+  "date": "2026-11-02",
+  "category": "Sports Radar",
+  "tags": [
+    "sports radar",
+    "FMCW",
+    "radial velocity",
+    "range measurement",
+    "validation"
+  ],
+  "readingTime": "7 min read"
+};
+
+# How Radar Measures Speed, Distance, and Movement
+
+A ball can travel quickly while producing a surprisingly low radar-speed reading. A player can move sideways while their distance from the sensor changes very little. Neither observation necessarily means that the radar is broken: the sensor and the coach may be describing different parts of the motion.
+
+Edition 2 explains three questions a sports measurement system must keep separate: how far away is the target, how fast is its range changing, and what path is it following?
+
+## Distance: turning a delayed reflection into range
+
+An FMCW radar transmits frequency sweeps called chirps. A reflection returns later than the outgoing signal. Mixing the received signal with a reference produces a beat frequency that carries range information. TI’s [fundamentals white paper](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf) explains this measurement chain.
+
+For an ideal stationary point target and a linear chirp, the simplified relationship is `R = c × f_b / (2 × S)`: R is range, c is propagation speed, f_b is beat frequency, and S is chirp slope. The factor of two accounts for the outward and return journey.
+
+For sports, range means distance from the radar to the reflecting target. It is not automatically distance traveled, height above the court, or distance to a goal. Those quantities require an appropriate coordinate system and, where needed, angle measurements.
+
+Moving targets also contribute Doppler to the beat signal. MathWorks documents [range-Doppler coupling](https://www.mathworks.com/help/radar/ug/iq-data-collection-detection-application-example.html): ignoring it can bias a range estimate. A fast-ball design must assess the effect for its own waveform and speed envelope.
+
+## Speed: the component along the line of sight
+
+A common FMCW velocity method processes phase changes across successive chirps. Infineon’s [signal-processing overview](https://community.infineon.com/t5/Knowledge-Base-Articles/Understanding-radar-signal-processing-An-overview-for-Infineon-XENSIV-radar/ta-p/833659) describes that process and its ambiguity limits.
+
+For a stationary monostatic radar, Doppler describes the target’s radial motion: toward or away from the sensor. In an ideal straight-line example, radial-speed magnitude is `|v_r| = v × |cos(theta)|`, where theta is the angle between the velocity vector and the outward line of sight. Confirm the device’s convention for positive and negative values.
+
+Imagine a ball moving away at 100 km/h at an angle of 30 degrees to that sightline. Its radial speed is approximately **86.6 km/h**. This is a geometric calculation, not a device benchmark. At an instant when motion is perpendicular to the sightline, radial velocity can be zero despite substantial sideways speed.
+
+Do not correct every reading by dividing by an assumed cosine. That correction needs a trustworthy direction estimate and becomes unstable near perpendicular motion. Mounting geometry and target identification still need validation.
+
+## Movement: connecting observations across time
+
+Range and radial velocity describe a detection. A trajectory requires observations over time and a decision about which detections belong to the same object. Angle information can help establish spatial position; tracking adds association and estimation.
+
+For example, a ball, a racket, and a player may move during the same event. A smooth line drawn on a screen is insufficient evidence that the ball was continuously observed. Ask the supplier to distinguish observed points, filtered positions, predictions through a gap, and any modeled continuation.
+
+MathWorks’ [range-Doppler guide](https://www.mathworks.com/help/phased/ug/range-doppler-response.html) explains how returns can be organized by distance and radial speed. Such a map helps separate returns, but it does not by itself identify a named athlete or establish a full three-dimensional path.
+
+## Four specifications to request separately
+
+A buyer should avoid treating one headline specification as a complete measurement claim:
+
+- **Range resolution:** whether nearby targets can be separated in range.
+- **Range accuracy:** how close a reported distance is to an appropriate reference value.
+- **Unambiguous velocity range:** the radial speeds supported without unresolved Doppler wrapping under the chosen configuration.
+- **Update rate and latency:** how frequently results arrive and how old the underlying observations are when displayed.
+
+MathWorks distinguishes [accuracy, bias, and resolution](https://www.mathworks.com/help/radar/ug/measurement-accuracy-bias-and-resolution.html). Under the ideal bandwidth relationship, `delta_R = c / (2 × B)`. Using c approximately equal to 300 million m/s, a hypothetical 4 GHz sweep gives **3.75 cm** nominal range resolution. It does not establish 3.75 cm position accuracy or prove that two sports balls will always be separated.
+
+The distinction matters when a display shows several decimal places. Extra digits do not demonstrate lower uncertainty.
+
+## A proposed sports validation session
+
+The following procedure is our editorial recommendation, not a reported experiment. Start with one ball type, one lane, and one primary output.
+
+1. **Define the quantity.** Choose radial speed at a stated location, total speed from a validated trajectory, or distance at an event time. Release speed, peak speed, and speed averaged over a lane must not be substituted silently.
+2. **Match the reference.** Use a suitable calibrated comparator or synchronized reference system. Two timing gates provide interval-average speed; compare that with the radar’s matched interval, rather than assuming it equals a single instantaneous reading.
+3. **Record the geometry.** Retain mounting position, orientation, measurement volume, firmware, waveform configuration, and reference alignment.
+4. **Exercise the envelope.** Test the intended distances, directions, speeds, and interference conditions. Include reinstallation trials if the system is portable.
+5. **Keep the failures.** Report invalid measurements, missed events, wrong-target selections, error distribution, and latency. Agree on acceptance criteria before reviewing results.
+
+For a coaching decision, ask whether a change is large enough to distinguish from the measured uncertainty. If geometry, configuration, or the metric definition changes, establish comparability before calling the difference an improvement.
+
+## What is established, and what remains to be shown
+
+The cited documents establish general FMCW processing principles and implementation methods. The angle and bandwidth examples above are ideal calculations. The sports session is a proposed validation design; no new athlete dataset, experimental sports result, or validated MicroDetect product specification is reported here.
+
+The practical lesson is to label each output precisely: range, radial speed, tracked position, or derived training metric. Next, we will compare what radar, cameras, and wearables each contribute to a sports measurement system.
+
+## Sources and further reading
+
+1. [Texas Instruments: The fundamentals of millimeter wave radar sensors](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf).
+2. [Infineon: Understanding radar signal processing](https://community.infineon.com/t5/Knowledge-Base-Articles/Understanding-radar-signal-processing-An-overview-for-Infineon-XENSIV-radar/ta-p/833659).
+3. [MathWorks: I/Q Data Collection and Detection Generation](https://www.mathworks.com/help/radar/ug/iq-data-collection-detection-application-example.html).
+4. [MathWorks: Range-Doppler Response](https://www.mathworks.com/help/phased/ug/range-doppler-response.html).
+5. [MathWorks: Measurement Accuracy, Bias, and Resolution](https://www.mathworks.com/help/radar/ug/measurement-accuracy-bias-and-resolution.html).
+
+[Read edition 1: What Is Millimeter-Wave Radar?](/insights/en-what-is-mmwave-radar-in-sports)

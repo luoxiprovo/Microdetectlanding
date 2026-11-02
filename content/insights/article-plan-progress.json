@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Publish the next pending topic in activeProgram first: one Chinese and one English MDX article, each with a PNG cover. Preserve topics 1–36 as a deferred backlog. Do not backfill or publish that backlog during this 52-edition sports program. Skip a topic only when both language files and covers exist and completion is recorded. Stop when all 52 sports editions are complete.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-11-01",
+  "updatedAt": "2026-11-02",
   "completedFiles": [
     {
       "topicId": 1,
@@ -305,6 +305,26 @@
       "completedAt": "2026-11-01",
       "coverImage": "/insights/what-is-mmwave-radar-in-sports.png",
       "coverWorkflow": "deterministic-vector-diagram",
+      "program": "sports-radar-52-week-v2"
+    },
+    {
+      "topicId": 38,
+      "language": "zh-CN",
+      "file": "how-radar-measures-speed-distance-movement.mdx",
+      "title": "雷达如何测量速度、距离与运动",
+      "completedAt": "2026-11-02",
+      "coverImage": "/insights/how-radar-measures-speed-distance-movement.png",
+      "coverWorkflow": "deterministic-geometry-diagram",
+      "program": "sports-radar-52-week-v2"
+    },
+    {
+      "topicId": 38,
+      "language": "en",
+      "file": "en-how-radar-measures-speed-distance-movement.mdx",
+      "title": "How Radar Measures Speed, Distance, and Movement",
+      "completedAt": "2026-11-02",
+      "coverImage": "/insights/en-how-radar-measures-speed-distance-movement.png",
+      "coverWorkflow": "deterministic-geometry-diagram",
       "program": "sports-radar-52-week-v2"
     }
   ],
@@ -623,8 +643,11 @@
       "week": 2,
       "zhTitle": "雷达如何测量速度、距离与运动",
       "enTitle": "How Radar Measures Speed, Distance, and Movement",
-      "status": "pending",
-      "program": "sports-radar-52-week-v2"
+      "status": "completed",
+      "program": "sports-radar-52-week-v2",
+      "completedAt": "2026-11-02",
+      "zhFile": "how-radar-measures-speed-distance-movement.mdx",
+      "enFile": "en-how-radar-measures-speed-distance-movement.mdx"
     },
     {
       "id": 39,
@@ -1040,8 +1063,8 @@
     "editionCount": 52,
     "scope": "The approved 52-week sports radar plan, published before the preserved industrial backlog.",
     "startedAt": "2026-11-01",
-    "completedEditions": 1,
-    "nextTopicId": 38
+    "completedEditions": 2,
+    "nextTopicId": 39
   },
   "archivedSportsRadarPrograms": [
     {
