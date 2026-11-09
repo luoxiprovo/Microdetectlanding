@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Publish the next pending topic in activeProgram first: one Chinese and one English MDX article, each with a PNG cover. Preserve topics 1–36 as a deferred backlog. Do not backfill or publish that backlog during this 52-edition sports program. Skip a topic only when both language files and covers exist and completion is recorded. Stop when all 52 sports editions are complete.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-11-02",
+  "updatedAt": "2026-11-09",
   "completedFiles": [
     {
       "topicId": 1,
@@ -325,6 +325,26 @@
       "completedAt": "2026-11-02",
       "coverImage": "/insights/en-how-radar-measures-speed-distance-movement.png",
       "coverWorkflow": "deterministic-geometry-diagram",
+      "program": "sports-radar-52-week-v2"
+    },
+    {
+      "topicId": 39,
+      "language": "zh-CN",
+      "file": "radar-cameras-wearables-sports-measurement.mdx",
+      "title": "雷达、摄像头与可穿戴设备分别能测什么？",
+      "completedAt": "2026-11-09",
+      "coverImage": "/insights/radar-cameras-wearables-sports-measurement.png",
+      "coverWorkflow": "deterministic-comparison-diagram",
+      "program": "sports-radar-52-week-v2"
+    },
+    {
+      "topicId": 39,
+      "language": "en",
+      "file": "en-radar-cameras-wearables-sports-measurement.mdx",
+      "title": "Radar vs. Cameras vs. Wearables: Which Measures What?",
+      "completedAt": "2026-11-09",
+      "coverImage": "/insights/en-radar-cameras-wearables-sports-measurement.png",
+      "coverWorkflow": "deterministic-comparison-diagram",
       "program": "sports-radar-52-week-v2"
     }
   ],
@@ -654,8 +674,11 @@
       "week": 3,
       "zhTitle": "雷达、摄像头与可穿戴设备分别能测什么？",
       "enTitle": "Radar vs. Cameras vs. Wearables: Which Measures What?",
-      "status": "pending",
-      "program": "sports-radar-52-week-v2"
+      "status": "completed",
+      "program": "sports-radar-52-week-v2",
+      "completedAt": "2026-11-09",
+      "zhFile": "radar-cameras-wearables-sports-measurement.mdx",
+      "enFile": "en-radar-cameras-wearables-sports-measurement.mdx"
     },
     {
       "id": 40,
@@ -1063,8 +1086,8 @@
     "editionCount": 52,
     "scope": "The approved 52-week sports radar plan, published before the preserved industrial backlog.",
     "startedAt": "2026-11-01",
-    "completedEditions": 2,
-    "nextTopicId": 39
+    "completedEditions": 3,
+    "nextTopicId": 40
   },
   "archivedSportsRadarPrograms": [
     {

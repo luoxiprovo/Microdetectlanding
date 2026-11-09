@@ -1,0 +1,84 @@
+export const meta = {
+  "title": "Radar vs. Cameras vs. Wearables: Which Measures What?",
+  "description": "Compare radar, camera, IMU, and GNSS measurements in sports: direct observations, derived metrics, published validation evidence, and a practical sensor-fusion acceptance plan.",
+  "coverImage": "/insights/en-radar-cameras-wearables-sports-measurement.png",
+  "date": "2026-11-09",
+  "category": "Sports Radar",
+  "tags": [
+    "sports radar",
+    "computer vision",
+    "wearables",
+    "sensor fusion",
+    "validation"
+  ],
+  "readingTime": "7 min read"
+};
+
+# Radar vs. Cameras vs. Wearables: Which Measures What?
+
+A coach wants to know whether a tennis player’s serve improved. Radar reports a faster ball, video shows a different body position, and a wrist sensor records a larger acceleration peak. All three observations may be useful. They answer different questions.
+
+Edition 3 compares the measurements behind these technologies. The useful starting point is the decision the coach needs to make, followed by the target, measurement definition, and evidence needed to trust the result.
+
+## What each technology observes
+
+The table below is an engineering comparison, not a product ranking. “Wearable” describes where a device is worn; its actual sensors may include an IMU, satellite receiver, or other components. This article focuses on movement sensing.
+
+<div className="mt-6 overflow-x-auto"><table className="w-full min-w-[640px] border-collapse text-left text-sm text-slate-300"><thead><tr><th scope="col" className="border border-cyan/20 bg-cyan/10 p-3 text-white">Technology</th><th scope="col" className="border border-cyan/20 bg-cyan/10 p-3 text-white">Initial observation</th><th scope="col" className="border border-cyan/20 bg-cyan/10 p-3 text-white">Derived output to validate</th><th scope="col" className="border border-cyan/20 bg-cyan/10 p-3 text-white">Check in the trial</th></tr></thead><tbody><tr><td className="border border-cyan/20 p-3 align-top">Radar</td><td className="border border-cyan/20 p-3 align-top">Radio reflections</td><td className="border border-cyan/20 p-3 align-top">Range, radial speed, angle; associated tracks</td><td className="border border-cyan/20 p-3 align-top">Geometry, target association, usable volume</td></tr><tr><td className="border border-cyan/20 p-3 align-top">Camera</td><td className="border border-cyan/20 p-3 align-top">Image frames</td><td className="border border-cyan/20 p-3 align-top">Keypoints, calibrated movement, model-based metrics</td><td className="border border-cyan/20 p-3 align-top">Visibility, calibration, task suitability</td></tr><tr><td className="border border-cyan/20 p-3 align-top">Wearable IMU</td><td className="border border-cyan/20 p-3 align-top">Local specific force and angular rate</td><td className="border border-cyan/20 p-3 align-top">Segment motion, event or activity metrics</td><td className="border border-cyan/20 p-3 align-top">Attachment, axes, range, processing</td></tr><tr><td className="border border-cyan/20 p-3 align-top">Wearable GNSS</td><td className="border border-cyan/20 p-3 align-top">Satellite signals</td><td className="border border-cyan/20 p-3 align-top">Position and velocity estimates</td><td className="border border-cyan/20 p-3 align-top">Signal access, venue, receiver performance</td></tr></tbody></table></div>
+
+## Radar: distance and motion along the viewing direction
+
+TI’s [FMCW fundamentals](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf) describe range estimation, velocity processing, and antenna-based angle estimation. For a fixed radar, Doppler velocity is the target’s radial component, toward or away from the sensor. Tracking and suitable angular observations can support additional spatial estimates.
+
+For a ball-speed drill, ask which part of flight is measured and whether the displayed speed is radial or corrected using an estimated trajectory. For an athlete-motion drill, ask which return is being followed. Ball speed, torso motion, and limb motion need different target-selection logic.
+
+A sports pilot must test its observation volume, installation, and difficult cases. A strong reflection is insufficient evidence of correct target association. Radar capability does not automatically establish detailed body pose, athlete identity, spin, or joint loading.
+
+## Cameras: visual context with a model between pixels and biomechanics
+
+Video preserves the visible scene. Software can estimate image keypoints and, with appropriate calibration and methods, derive spatial movement. Joint angles and forces are later outputs in that chain.
+
+A concrete research example is the [2023 OpenCap study](https://doi.org/10.1371/journal.pcbi.1011462). The authors validated a two-smartphone configuration against laboratory motion capture and force plates in ten healthy adults during walking, squatting, chair rises, and drop jumps. They reported a mean joint-angle error of 4.5 degrees across the evaluated data. This is evidence for that study’s methods and tasks, not a universal camera accuracy specification.
+
+OpenCap combines pose estimation, biomechanical modeling, and simulation. Its force estimates are model-derived; a camera does not directly record ground reaction force. The paper also discusses occluded or misidentified keypoints. A visually plausible skeleton therefore needs task-specific validation before it supports a consequential decision.
+
+## Wearables: motion at the attachment point
+
+An IMU usually combines accelerometers and gyroscopes. Bosch’s [BMI270 datasheet](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi270-ds000.pdf) describes force-related acceleration sensing and angular-rate sensing. These are local sensor measurements, expressed relative to the device axes.
+
+A wrist device observes wrist-device motion. Turning it into racket speed, whole-body displacement, or a training-load score requires further processing and validation. Sensor position, orientation, attachment stability, measurement range, and filtering should be documented. Check whether the actual action exceeds the configured sensing range.
+
+A wearable with GNSS adds a different measurement chain. [GPS.gov](https://www.gps.gov/gps-accuracy) explains that receiver performance depends on satellite geometry, blockage, reflections, and receiver design; indoor use is a common problem. Do not transfer a phone’s position specification or a satellite signal specification to a sports tracker’s speed accuracy.
+
+## Choose around the sports question
+
+These are proposed evaluation choices, not reported trials:
+
+- **Serve speed:** evaluate a radar configured for the ball’s speed and direction. Add synchronized video when the coach also needs visible technique context. A wrist acceleration peak is a separate metric.
+- **Landing technique:** evaluate camera-based kinematics against an appropriate reference for the chosen task. An attached IMU may contribute segment-motion observations. If landing force is the target metric, define and validate that estimate against a suitable force reference.
+- **Movement around a field:** evaluate the selected wearable’s positioning method in the intended venue. If using fixed cameras or radar, verify coverage and identity continuity when players cross.
+
+Consent, retention, and access rules should cover every stream. Removing identifiable video does not automatically make trajectories or athlete-linked wearable records anonymous.
+
+## Combining sensors needs its own acceptance test
+
+A combined display does not prove that its inputs describe the same event. A useful evaluation should retain event timestamps, coordinate frames, athlete or target association, software versions, and missing-data indicators.
+
+For illustration, a ball traveling at a constant 30 m/s covers 0.6 m in 20 milliseconds. That is an ideal calculation, not an experimental result. It shows why a small time offset can matter when matching a radar detection to video. A higher update rate alone does not establish synchronization.
+
+Our proposed acceptance procedure is to define one output, choose an appropriate reference, synchronize recordings, repeat representative and difficult trials, and retain failures. Report error, missed events, wrong-target selections, coverage, and latency. A fused system should be compared with its component systems so any claimed benefit is demonstrated.
+
+## Where the evidence ends
+
+The radar and IMU documents establish sensing principles. OpenCap provides a specific published validation study. The sports examples and acceptance procedure above are editorial proposals. They do not report a new experiment, clinical validation, or a validated MicroDetect sports product.
+
+Choose a system whose observation and validation match the training decision. Next in this series: what sports radar can actually detect, and how to tell a detection from an interpretation.
+
+[Read edition 2: How Radar Measures Speed, Distance, and Movement](/insights/en-how-radar-measures-speed-distance-movement)
+
+## Sources and further reading
+
+1. [Texas Instruments: The fundamentals of millimeter wave radar sensors](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf).
+2. [Uhlrich et al. (2023): OpenCap: Human movement dynamics from smartphone videos](https://doi.org/10.1371/journal.pcbi.1011462).
+3. [Bosch Sensortec: BMI270 datasheet, section 4.1](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi270-ds000.pdf).
+4. [GPS.gov: GPS Accuracy](https://www.gps.gov/gps-accuracy).

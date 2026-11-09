@@ -1,0 +1,84 @@
+export const meta = {
+  "title": "雷达、摄像头与可穿戴设备分别能测什么？",
+  "description": "比较体育场景中雷达、摄像头、IMU 与 GNSS 的观测量、推导指标与验证证据，并介绍实用的传感器融合验收方法。",
+  "coverImage": "/insights/radar-cameras-wearables-sports-measurement.png",
+  "date": "2026-11-09",
+  "category": "体育雷达",
+  "tags": [
+    "体育雷达",
+    "计算机视觉",
+    "可穿戴设备",
+    "传感器融合",
+    "验证"
+  ],
+  "readingTime": "7 分钟阅读"
+};
+
+# 雷达、摄像头与可穿戴设备分别能测什么？
+
+教练想知道，一名网球运动员的发球是否进步了。雷达显示球速提高，视频显示身体姿态改变，手腕传感器记录到更大的加速度峰值。这三条信息都可能有用，但回答的是不同问题。
+
+体育雷达系列第 3 篇比较这些技术背后的测量量。选型可以从教练需要做的判断开始，再确定目标、指标定义与验证证据。
+
+## 每种技术实际观测什么
+
+下表是工程比较，不是产品排名。“可穿戴”描述设备佩戴的位置，实际传感器可能包括 IMU、卫星接收器或其他器件。本文聚焦运动感知。
+
+<div className="mt-6 overflow-x-auto"><table className="w-full min-w-[640px] border-collapse text-left text-sm text-slate-300"><thead><tr><th scope="col" className="border border-cyan/20 bg-cyan/10 p-3 text-white">技术</th><th scope="col" className="border border-cyan/20 bg-cyan/10 p-3 text-white">初始观测</th><th scope="col" className="border border-cyan/20 bg-cyan/10 p-3 text-white">需要验证的推导输出</th><th scope="col" className="border border-cyan/20 bg-cyan/10 p-3 text-white">试点核对事项</th></tr></thead><tbody><tr><td className="border border-cyan/20 p-3 align-top">雷达</td><td className="border border-cyan/20 p-3 align-top">无线电反射</td><td className="border border-cyan/20 p-3 align-top">距离、径向速度、角度及关联轨迹</td><td className="border border-cyan/20 p-3 align-top">几何关系、目标关联、有效空间</td></tr><tr><td className="border border-cyan/20 p-3 align-top">摄像头</td><td className="border border-cyan/20 p-3 align-top">图像帧</td><td className="border border-cyan/20 p-3 align-top">关键点、标定后的运动及模型指标</td><td className="border border-cyan/20 p-3 align-top">可见性、标定与任务适用性</td></tr><tr><td className="border border-cyan/20 p-3 align-top">可穿戴 IMU</td><td className="border border-cyan/20 p-3 align-top">局部比力与角速度</td><td className="border border-cyan/20 p-3 align-top">肢段运动、事件或活动指标</td><td className="border border-cyan/20 p-3 align-top">固定方式、坐标轴、量程与处理</td></tr><tr><td className="border border-cyan/20 p-3 align-top">可穿戴 GNSS</td><td className="border border-cyan/20 p-3 align-top">卫星信号</td><td className="border border-cyan/20 p-3 align-top">位置与速度估计</td><td className="border border-cyan/20 p-3 align-top">信号接收、场馆与接收机表现</td></tr></tbody></table></div>
+
+## 雷达：距离与沿观测方向的运动
+
+TI 的 [FMCW 基础资料](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf)介绍了距离估计、速度处理与基于天线的角度估计。对于固定雷达，多普勒速度是目标朝向或远离设备的径向分量。追踪过程结合适当的角度观测，可以进一步估计空间运动。
+
+测量球速时，应明确观测的是哪一段飞行，显示的是径向速度，还是通过估计轨迹修正后的速度。测量运动员动作时，应明确系统追踪的是哪个回波。球、躯干和四肢需要不同的目标筛选逻辑。
+
+体育试点应验证观测空间、安装方式与困难场景。回波强，并不能证明目标关联正确。具备雷达能力，也不自动代表能识别精细姿态、运动员身份、球的旋转或关节负荷。
+
+## 摄像头：从像素到生物力学指标之间还有模型
+
+视频保留可见的场景信息。软件可估计图像关键点，在适当标定和算法支持下推导空间运动。关节角度与力，则是后续处理链路中的输出。
+
+一个具体研究案例是 [2023 年 OpenCap 论文](https://doi.org/10.1371/journal.pcbi.1011462)。作者使用双手机配置，与实验室动作捕捉和测力台进行比较。验证涉及十名健康成年人，动作包括行走、深蹲、坐站和落下跳。研究在所评估数据中报告了 4.5 度的平均关节角度误差。这是针对该方法和任务的证据，不能当作所有摄像系统的统一精度参数。
+
+OpenCap 结合姿态估计、生物力学建模和仿真，其力估计来自模型；摄像头并不直接记录地面反作用力。论文也讨论了关键点被遮挡或识别错误的问题。看起来合理的骨架图，仍需要针对任务验证，才能支持有实际后果的判断。
+
+## 可穿戴设备：测量安装点的运动
+
+IMU 通常结合加速度计与陀螺仪。Bosch 的 [BMI270 数据手册](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi270-ds000.pdf)介绍了与受力相关的加速度感知和角速度感知。这些是设备坐标轴下的局部传感测量。
+
+手腕设备观测的是手腕处设备的运动。要把它换算成球拍速度、全身位移或训练负荷分数，还需要进一步处理与验证。传感器的位置、方向、固定稳定性、量程与滤波方法，都应记录。还应检查实际动作是否超过配置量程。
+
+带有 GNSS 的可穿戴设备增加了另一条测量链。[GPS.gov](https://www.gps.gov/gps-accuracy)说明，接收机表现受到卫星几何、遮挡、反射与接收机设计影响，室内使用是常见问题。不能把手机定位参数或卫星信号参数直接当作体育追踪器的测速准确度。
+
+## 围绕训练问题选择
+
+以下是建议的验证选择，不是已经完成的试验：
+
+- **发球速度：** 评估针对球的速度与方向配置的雷达。如果教练也需要可见技术动作，可加入同步视频。手腕加速度峰值应作为另一项指标处理。
+- **落地技术：** 针对选定动作，用适当参照验证摄像头推导的运动学指标。固定在身体上的 IMU 可以提供肢段运动信息。如果目标是落地力，应明确估计方法，并与合适的力参照进行验证。
+- **场上移动：** 在实际场馆评估可穿戴设备所用的定位方法。如果使用固定摄像头或雷达，应验证覆盖范围，以及球员交叉时的身份连续性。
+
+同意、保留期限与访问规则应覆盖所有数据流。去掉可识别人脸的视频，并不自动让运动轨迹或关联到运动员的可穿戴记录匿名化。
+
+## 组合传感器也需要独立验收
+
+把多种数据放进同一个界面，并不能证明它们描述同一次事件。评估时应保留事件时间戳、坐标系、运动员或目标关联、软件版本与缺失数据标记。
+
+举一个理想计算：球以 30 m/s 匀速飞行，20 毫秒内会移动 0.6 米。这不是实验结果，它说明雷达与视频匹配时，即使很小的时间偏移也可能有影响。更高的更新率本身不能证明时间同步正确。
+
+本文建议的验收流程是：先定义一个输出，选择合适参照，同步记录，重复代表性与困难场景，并保留失败样本。报告误差、漏测、目标关联错误、覆盖范围与延迟。融合系统还应与组成它的单传感器系统进行比较，才能证明声称的收益。
+
+## 证据的适用范围
+
+雷达与 IMU 资料说明了感知原理，OpenCap 论文提供了一项具体的已发表验证研究。本文体育示例与验收流程属于编辑建议，没有报告新的实验、临床验证或经过验证的析微探物体育产品。
+
+应选择观测方式与验证证据都符合训练决策的系统。下一篇将讨论：体育雷达到底能检测什么，以及如何区分检测与解释。
+
+[阅读第 2 篇：雷达如何测量速度、距离与运动](/insights/how-radar-measures-speed-distance-movement)
+
+## 参考资料与延伸阅读
+
+1. [Texas Instruments: The fundamentals of millimeter wave radar sensors](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf).
+2. [Uhlrich et al. (2023): OpenCap: Human movement dynamics from smartphone videos](https://doi.org/10.1371/journal.pcbi.1011462).
+3. [Bosch Sensortec: BMI270 datasheet, section 4.1](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi270-ds000.pdf).
+4. [GPS.gov: GPS Accuracy](https://www.gps.gov/gps-accuracy).
