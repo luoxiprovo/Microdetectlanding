@@ -1,0 +1,95 @@
+export const meta = {
+  "title": "What Can Sports Radar Actually Detect?",
+  "description": "Separate radar detections, tracks, and sports metrics. Understand target detectability, missed events, false alarms, pose-estimation research, and a practical sports acceptance test.",
+  "coverImage": "/insights/en-what-can-sports-radar-actually-detect.png",
+  "date": "2026-11-16",
+  "category": "Sports Radar",
+  "tags": [
+    "sports radar",
+    "point cloud",
+    "detection",
+    "tracking",
+    "validation"
+  ],
+  "readingTime": "7 min read"
+};
+
+# What Can Sports Radar Actually Detect?
+
+A sports radar demonstration shows a cloud of moving dots, followed by a ball trajectory and a training score. Those outputs can look like one measurement. In practice, each step answers a different question and needs its own evidence.
+
+Edition 4 explains what a radar detection contains, why a target may disappear, and how to evaluate claims about tracking and human movement. The aim is to turn “can it detect a ball?” into a testable requirement.
+
+## A detection is a processing decision
+
+Radar receives reflections. Signal processing then decides which returns qualify as detections under the selected configuration.
+
+TI’s [CFAR processing documentation](https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/CFARPROC_PAGE.html) provides a concrete implementation: candidate peaks must satisfy detection criteria and configured regions of interest. Depending on the processing mode, outputs can include position or range information, radial Doppler velocity, and noise and signal-to-noise information. This is documentation of a specific processing chain, not a universal output format for every radar.
+
+A detection therefore represents a return that passed the algorithm’s checks. A point is not automatically an entire ball, a body joint, or one athlete. Confirm which fields the selected system actually exports, their units, coordinate frame, and validity conditions.
+
+## Separate detections, tracks, and sports metrics
+
+A useful supplier review should ask for three outputs separately:
+
+1. **Detection:** What qualified return appeared at this observation time? Retain the measured attributes and quality information.
+2. **Track:** Which detections are associated with the same target across time? Identify updates based on observations and predictions made through missing observations.
+3. **Sports metric:** How is the track or signal converted into release speed, jump height, repetition count, or a technique score? Define the calculation and reference method.
+
+TI’s [motion-and-presence demo](https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/MOTION_AND_PRESENCE_DETECTION_DEMO.html) illustrates this separation with point-cloud processing, a tracker, and classification as different stages. Its people-sensing implementation does not establish performance for sports balls or fast athletic actions.
+
+For a coaching application, ask where each displayed number comes from. A tracker identifier distinguishes algorithmic tracks; it does not by itself verify a player’s real identity.
+
+## Why a target can be present but undetected
+
+Physical size alone is an insufficient guide to detectability. MathWorks’ [radar-cross-section explanation](https://www.mathworks.com/help/radar/ug/modeling-target-radar-cross-section.html) describes how reflection depends on target shape, material, viewing geometry, and frequency. A stronger useful return generally improves the chance of detection.
+
+For sports testing, this means that detecting a person cannot establish the range at which a particular ball will be detected. Test the actual target, orientation, distance, and surroundings. The dimensions of a ball do not directly specify its radar cross section.
+
+Detection settings also matter. A target outside the configured region can be excluded, even if a return exists. Ask the supplier to record thresholds, processing mode, waveform, and any clutter filtering when a test is run. A change in software configuration can change the usable measurement envelope.
+
+## Detection probability is not an event-success guarantee
+
+MathWorks’ [statistical radar introduction](https://www.mathworks.com/help/fusion/ug/introduction-to-radar-for-object-tracking.html) distinguishes probability of detection from probability of false alarm at the resolution-bin level. These quantities describe a defined detection model. They are not automatically the fraction of serves successfully measured or the number of false shots reported per hour.
+
+For a sports product, add application-level measures: attempts recorded correctly, missed attempts, false events, wrong-target tracks, and valid coverage of the relevant flight segment. Define the denominator and the matching rules before collecting results.
+
+Here is a hypothetical accounting example, not a trial result: in 100 attempts, 90 produce a valid reading, eight are missed, and two select the wrong target. A speed-error report calculated only on the 90 valid readings must be accompanied by those ten unsuccessful attempts. Otherwise, a precise-looking error figure hides the availability problem.
+
+## Human pose is a researched inference
+
+Radar-based pose estimation is a real research area, but skeletal joints are model outputs rather than labels attached to raw radar points.
+
+The [2025 mmFree-Pose paper](https://www.mdpi.com/2306-5354/12/8/891) describes synchronized radar and inertial motion-capture annotations. It reports 4,534 aligned samples from three participants, with point-cloud attributes paired with 23-joint annotations, and evaluates learning models on the dataset. This is an experimental dataset and modeling study.
+
+It does not establish that a generic radar can measure every athlete’s joints in a crowded venue. The small participant set is a reason to seek further evidence on new people, movements, and environments before transferring a result to a sports product. The same distinction applies to action classification: recognizing a learned movement category does not establish the accuracy of a biomechanical metric.
+
+## Turn a sports claim into a proposed acceptance test
+
+The following is an editorial test proposal, not a reported experiment. Consider a single-lane tennis-serve pilot:
+
+- **Name the claim:** identify the ball during a defined flight segment and report a specifically defined speed metric.
+- **Describe the envelope:** ball type, distance, direction, speed range, installation geometry, and permitted simultaneous targets.
+- **Use a suitable reference:** synchronize the reference and radar recordings and match both the event and the measurement definition.
+- **Include difficult cases:** off-axis serves, a player or racket moving nearby, empty-lane recordings, and interruptions to valid tracking.
+- **Retain failures:** report misses, false events, incorrect associations, metric error, and latency. Keep observed and predicted track sections distinguishable.
+
+Agree on acceptance criteria before reviewing the data. Expand to multiple lanes or athletes only after the initial claim is demonstrated under documented conditions.
+
+## What a useful answer sounds like
+
+A useful detection claim states the target, configuration, operating conditions, output, and success criteria. It also states how the system behaves when evidence is insufficient.
+
+The cited documentation establishes processing principles; mmFree-Pose supplies experimental research evidence. The sports pilot and hypothetical accounting example above are proposals and illustrations. They report no new sports trial or validated MicroDetect product capability.
+
+Next in this series: inside an FMCW radar sensor, from the transmitted chirp to the processing pipeline.
+
+[Read edition 3: Radar vs. Cameras vs. Wearables](/insights/en-radar-cameras-wearables-sports-measurement)
+
+## Sources and further reading
+
+1. [Texas Instruments: xWRL6432 CFAR processing documentation](https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/CFARPROC_PAGE.html).
+2. [Texas Instruments: Motion and Presence Detection demo](https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/MOTION_AND_PRESENCE_DETECTION_DEMO.html).
+3. [MathWorks: Introduction to Statistical Radar Models for Object Tracking](https://www.mathworks.com/help/fusion/ug/introduction-to-radar-for-object-tracking.html).
+4. [MathWorks: Modeling Target Radar Cross Section](https://www.mathworks.com/help/radar/ug/modeling-target-radar-cross-section.html).
+5. [Su et al. (2025): A High-Fidelity mmWave Radar Dataset for Privacy-Sensitive Human Pose Estimation](https://www.mdpi.com/2306-5354/12/8/891).

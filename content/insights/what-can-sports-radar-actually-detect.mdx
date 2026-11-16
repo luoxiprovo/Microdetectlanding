@@ -1,0 +1,95 @@
+export const meta = {
+  "title": "体育雷达到底能检测什么？",
+  "description": "区分雷达检测点、轨迹与体育指标，理解目标可检测性、漏测与虚警、人体姿态研究，以及实用的体育试点验收方法。",
+  "coverImage": "/insights/what-can-sports-radar-actually-detect.png",
+  "date": "2026-11-16",
+  "category": "体育雷达",
+  "tags": [
+    "体育雷达",
+    "点云",
+    "检测",
+    "追踪",
+    "验证"
+  ],
+  "readingTime": "7 分钟阅读"
+};
+
+# 体育雷达到底能检测什么？
+
+体育雷达演示先显示一团移动的点，再画出球的轨迹，最后给出训练分数。这些画面容易让人觉得它们是同一次测量。实际上，每一步回答的问题不同，需要的证据也不同。
+
+体育雷达系列第 4 篇介绍：一次检测包含什么、目标为什么会消失，以及如何评估追踪和人体运动分析的说法。目标是把“能不能检测到球”变成可验证的要求。
+
+## 检测是处理算法作出的判断
+
+雷达接收反射信号，信号处理再根据所选配置判断哪些回波符合检测条件。
+
+TI 的 [CFAR 处理文档](https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/CFARPROC_PAGE.html)提供了一个具体实现：候选峰值需要满足检测条件，并位于配置的关注区域内。根据处理模式，输出可以包含位置或距离信息、径向多普勒速度，以及噪声和信噪信息。这是一条具体处理链的说明，不能当成所有雷达的统一输出格式。
+
+因此，检测点表示通过算法检查的回波，不自动等于完整的一颗球、一个关节或一名运动员。应确认所选系统实际输出哪些字段、单位、坐标系与有效条件。
+
+## 分别查看检测、轨迹和体育指标
+
+评估供应商方案时，可以分别要求展示三类输出：
+
+1. **检测：** 当前观测时刻出现了什么符合条件的回波？保留测量属性与质量信息。
+2. **轨迹：** 哪些不同时刻的检测被关联为同一个目标？区分基于观测的更新与漏测期间的预测。
+3. **体育指标：** 如何把轨迹或信号换算成出手速度、跳跃高度、动作次数或技术评分？明确计算方法与参照方法。
+
+TI 的[运动与存在检测演示](https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/MOTION_AND_PRESENCE_DETECTION_DEMO.html)将点云处理、追踪与分类列为不同阶段。这种人员感知实现，并不能证明对体育用球或高速动作也有同样表现。
+
+对训练应用，应逐项追问界面数值来自哪里。追踪编号区分的是算法中的轨迹，并不直接验证运动员的真实身份。
+
+## 为什么目标存在，却没有被检测到
+
+仅凭物体尺寸，不足以判断可检测性。MathWorks 的[雷达散射截面说明](https://www.mathworks.com/help/radar/ug/modeling-target-radar-cross-section.html)介绍了反射与目标形状、材料、观测几何和频率之间的关系。有效回波更强，通常更容易被检测。
+
+因此，检测到人，不能证明某种球在同样距离上也能被检测。体育测试应使用实际目标，并覆盖朝向、距离与周边环境。球的几何尺寸，不直接等于它的雷达散射截面。
+
+配置同样重要。即使存在回波，目标也可能因为位于配置区域之外而被排除。测试时应记录阈值、处理模式、波形与杂波滤除设置。软件配置变化，也可能改变有效测量边界。
+
+## 检测概率不等于体育事件成功率
+
+MathWorks 的[统计雷达介绍](https://www.mathworks.com/help/fusion/ug/introduction-to-radar-for-object-tracking.html)区分了分辨单元层面的检测概率与虚警概率。这些量描述的是规定的检测模型，不能直接当成发球测量成功比例，或每小时误报击球次数。
+
+体育产品还需要应用层指标：正确记录的尝试、漏测、误报事件、错误目标轨迹，以及所需飞行区间的有效覆盖。采集数据之前，应先定义分母与匹配规则。
+
+举一个假设的统计例子，并非实测结果：100 次尝试中，90 次得到有效读数，8 次漏测，2 次选错目标。如果只对 90 次有效读数计算速度误差，报告中还必须同时列出那 10 次未成功的尝试。否则，看起来精确的误差数字会掩盖可用性问题。
+
+## 人体姿态属于经过研究的推断
+
+雷达人体姿态估计确实已有研究，但骨骼关节是模型输出，并不是原始雷达点自带的标签。
+
+[2025 年 mmFree-Pose 论文](https://www.mdpi.com/2306-5354/12/8/891)介绍了同步雷达与惯性动作捕捉标注。论文报告了三名参与者的 4,534 个对齐样本，将点云属性与 23 关节标注配对，并在数据集上评估学习模型。这是一项实验性数据集与建模研究。
+
+它不能证明通用雷达在拥挤场馆里都能测量每名运动员的关节。参与者数量较少，意味着把结果用于体育产品前，还应寻求针对新人员、新动作与新环境的验证。动作分类也存在同样区别：识别出某个学过的动作类别，不等于已经证明某项生物力学指标准确。
+
+## 把体育能力声明变成验收方案
+
+以下是编辑提出的测试建议，不是已完成实验。以单通道网球发球试点为例：
+
+- **明确声明：** 在规定飞行区间内识别球，并输出定义明确的速度指标。
+- **写明工作边界：** 球的类型、距离、方向、速度范围、安装几何关系与允许同时出现的目标。
+- **使用适当参照：** 同步参照与雷达记录，匹配同一次事件和同一个测量定义。
+- **加入困难情况：** 偏轴发球、附近运动员或球拍移动、空通道记录，以及有效追踪中断。
+- **保留失败：** 报告漏测、误报、错误关联、指标误差与延迟。轨迹中实际观测和预测的区间应可区分。
+
+验收标准应在查看数据之前约定。只有最初的声明在有记录的条件下得到验证后，才适合扩展到多通道或多运动员。
+
+## 怎样的回答才有用
+
+有用的检测能力说明，应列出目标、配置、工作条件、输出与成功标准，也应说明证据不足时系统如何处理。
+
+所引文档说明处理原理，mmFree-Pose 提供实验性研究证据。本文体育试点与假设统计例子属于建议和示意，没有报告新的体育实验或经过验证的析微探物产品能力。
+
+下一篇将走进 FMCW 雷达传感器，从发射 chirp 到信号处理链路。
+
+[阅读第 3 篇：雷达、摄像头与可穿戴设备分别能测什么？](/insights/radar-cameras-wearables-sports-measurement)
+
+## 参考资料与延伸阅读
+
+1. [Texas Instruments: xWRL6432 CFAR processing documentation](https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/CFARPROC_PAGE.html).
+2. [Texas Instruments: Motion and Presence Detection demo](https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/MOTION_AND_PRESENCE_DETECTION_DEMO.html).
+3. [MathWorks: Introduction to Statistical Radar Models for Object Tracking](https://www.mathworks.com/help/fusion/ug/introduction-to-radar-for-object-tracking.html).
+4. [MathWorks: Modeling Target Radar Cross Section](https://www.mathworks.com/help/radar/ug/modeling-target-radar-cross-section.html).
+5. [Su et al. (2025): A High-Fidelity mmWave Radar Dataset for Privacy-Sensitive Human Pose Estimation](https://www.mdpi.com/2306-5354/12/8/891).

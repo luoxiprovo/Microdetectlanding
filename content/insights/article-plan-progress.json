@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Publish the next pending topic in activeProgram first: one Chinese and one English MDX article, each with a PNG cover. Preserve topics 1–36 as a deferred backlog. Do not backfill or publish that backlog during this 52-edition sports program. Skip a topic only when both language files and covers exist and completion is recorded. Stop when all 52 sports editions are complete.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-11-09",
+  "updatedAt": "2026-11-16",
   "completedFiles": [
     {
       "topicId": 1,
@@ -346,6 +346,26 @@
       "coverImage": "/insights/en-radar-cameras-wearables-sports-measurement.png",
       "coverWorkflow": "deterministic-comparison-diagram",
       "program": "sports-radar-52-week-v2"
+    },
+    {
+      "topicId": 40,
+      "language": "zh-CN",
+      "file": "what-can-sports-radar-actually-detect.mdx",
+      "title": "体育雷达到底能检测什么？",
+      "completedAt": "2026-11-16",
+      "coverImage": "/insights/what-can-sports-radar-actually-detect.png",
+      "coverWorkflow": "deterministic-processing-diagram",
+      "program": "sports-radar-52-week-v2"
+    },
+    {
+      "topicId": 40,
+      "language": "en",
+      "file": "en-what-can-sports-radar-actually-detect.mdx",
+      "title": "What Can Sports Radar Actually Detect?",
+      "completedAt": "2026-11-16",
+      "coverImage": "/insights/en-what-can-sports-radar-actually-detect.png",
+      "coverWorkflow": "deterministic-processing-diagram",
+      "program": "sports-radar-52-week-v2"
     }
   ],
   "topics": [
@@ -685,8 +705,11 @@
       "week": 4,
       "zhTitle": "体育雷达到底能检测什么？",
       "enTitle": "What Can Sports Radar Actually Detect?",
-      "status": "pending",
-      "program": "sports-radar-52-week-v2"
+      "status": "completed",
+      "program": "sports-radar-52-week-v2",
+      "completedAt": "2026-11-16",
+      "zhFile": "what-can-sports-radar-actually-detect.mdx",
+      "enFile": "en-what-can-sports-radar-actually-detect.mdx"
     },
     {
       "id": 41,
@@ -1086,8 +1109,8 @@
     "editionCount": 52,
     "scope": "The approved 52-week sports radar plan, published before the preserved industrial backlog.",
     "startedAt": "2026-11-01",
-    "completedEditions": 3,
-    "nextTopicId": 40
+    "completedEditions": 4,
+    "nextTopicId": 41
   },
   "archivedSportsRadarPrograms": [
     {
