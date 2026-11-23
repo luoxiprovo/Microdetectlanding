@@ -1,0 +1,95 @@
+export const meta = {
+  "title": "走进 FMCW 雷达传感器",
+  "description": "从 chirp 生成、混频、ADC 采样到数字处理，理解 FMCW 雷达的内部链路、帧时序、原始数据量与体育试点需求。",
+  "coverImage": "/insights/inside-fmcw-radar-sensor.png",
+  "date": "2026-11-23",
+  "category": "体育雷达",
+  "tags": [
+    "体育雷达",
+    "FMCW",
+    "信号处理",
+    "ADC",
+    "chirp 配置"
+  ],
+  "readingTime": "7 分钟阅读"
+};
+
+# 走进 FMCW 雷达传感器
+
+雷达传感器可能只有一块小电路板，但训练中显示的速度，需要先经过多个阶段：频率源生成波形，天线发射和接收，模拟电路处理回波，软件再把采样数据变成目标信息的估计。
+
+体育雷达系列第 5 篇将打开这条测量链路。理解各个模块，有助于教练和产品团队判断：为什么同一套设备在某个训练中可用，换一个动作却需要调整配置。
+
+## 1. 频率合成器生成 chirp
+
+FMCW 指调频连续波。常见波形是一个扫频期间频率近似线性上升的 chirp。频率合成器生成这个变化的频率，发射通道通过天线将信号送出。
+
+TI 的[基础白皮书](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf)说明，生成信号的一份副本也会送到接收机的混频器作为参考，使接收机能够比较回波与发射波形。
+
+载波频率与扫频带宽是不同参数。只有一个频段标签，无法说明具体波形、天线几何关系或支持的体育测量能力。
+
+## 2. 接收机把回波与参考信号混频
+
+接收天线收集反射信号。对简化的静止目标，回波可以看成发射 chirp 的延迟副本。将它与参考信号混频，可以得到携带距离信息的低频拍频信号。目标运动也会影响信号，因此运动目标处理需要考虑这一贡献。
+
+Infineon 的 [FMCW 说明](https://community.infineon.com/t5/Knowledge-Base-Articles/Understanding-FMCW-radars/ta-p/1089561)介绍了中频（IF）通道及后续数字化。IF 信号此时仍是电波形，还不是球速读数。
+
+体育试点应确认，接收机配置是否符合目标和测量空间。有效的框图应同时画出回波通道与进入混频器的参考信号；接收机并不是随意听到一个无线电回波，就能直接获得距离。
+
+## 3. 滤波与 ADC 生成数字采样
+
+模拟滤波与放大为模数转换器（ADC）准备输入。ADC 对下变频后的信号进行采样，在这种架构中，不需要直接数字化毫米波载波。
+
+[Analog Devices 的系统设计文章](https://www.analog.com/en/resources/technical-articles/how-to-build-a-24-ghz-fmcw-radar-system.html)讨论了模拟信号链、ADC 带宽、采样与处理负载之间的关系。它是一个 24 GHz 设计案例；接收链路的概念可用于理解本文主题，但其中的器件选择并不是毫米波体育设备的选型处方。
+
+应确认实际输出格式。有些接收机输出实数采样，有些提供复数 I/Q 采样。位深、通道数、滤波与采样时序都会影响后续软件拿到的数据。“原始数据”也需要明确格式定义。
+
+## 4. 软件处理三个有用的维度
+
+连续采样可以组织成雷达数据立方体。MathWorks 的[数据立方体指南](https://www.mathworks.com/help/phased/gs/radar-data-cube.html)区分快时间、慢时间与空间采样。对适当的多 chirp FMCW 配置，可以这样理解：
+
+- **一个 chirp 内的采样：** 对拍频信号做频率分析，提供距离信息。
+- **跨时间重复的 chirp：** 相干处理支持多普勒估计。有效时间间隔必须符合发射调度与处理方法。
+- **天线通道：** 当阵列与标定条件允许时，空间处理支持方向估计。
+
+这些维度不同于最终点云中的 x、y、z 坐标。数据立方体组织的是信号采样，点云则已经是处理后的输出。
+
+检测阶段筛选候选回波，追踪阶段再关联不同时刻的观测。训练指标还需要另一个定义明确的计算或模型。根据设计，这些后续阶段可能在传感器或相连的处理器上运行。
+
+## 5. 一帧也是一张测量时间表
+
+多个 chirp 组成帧。体育系统需要决定采集多少采样点和 chirp、如何调度发射天线，以及何时处理和输出结果。
+
+TI 的 [chirp 配置应用笔记](https://www.ti.com/lit/an/swra553a/swra553a.pdf)介绍了距离、速度、时序与内存之间的取舍。chirp 时序影响无模糊速度，观测时长影响速度分辨率。如果直接复制演示配置而不检查需求，可能无法适用于实际训练。
+
+应分别询问有效观测时长、帧周期、输出率与端到端延迟。收到一条新消息，不必然意味着完成了一次新的独立观测；chirp 之间的时间，也不同于屏幕结果之间的时间。
+
+## 一个假设的数据量例子
+
+假设设计每个 chirp 保存 256 个采样点，使用四个接收通道，共采集 64 个 chirp。若每个采样是一个 16 位实数值，数据量为 `256 × 4 × 64 × 2 = 131,072 字节`，即每帧 **128 KiB**，尚未计入元数据与处理缓冲区。如果每秒 20 帧，单采样载荷约为 **2.62 MB/s**，这里 MB 使用十进制单位。
+
+如果每个采样包含分别为 16 位的 I、Q 两个值，载荷就会加倍。这是用于说明存储量的计算，不是建议的波形配置、芯片参数或性能测试。它说明了为什么输出原始采样与输出一个简短目标列表，需要不同的通信资源。
+
+## 用框图组织体育试点
+
+以拟议的单通道球速训练为例，本文建议在采集前，将需求对应到相关模块：
+
+1. **目标与几何关系：** 明确球、距离、方向与安装方式，确认天线和接收机需要支持的范围。
+2. **波形：** 记录预期径向速度范围、距离分辨率、chirp 调度与有效观测带宽。
+3. **采集：** 保留采样格式、增益与滤波设置、标定和配置版本。
+4. **处理与输出：** 定义检测、轨迹与速度指标，保留有效状态与时间戳。
+5. **验收：** 与同步且合适的参照进行比较，在代表性条件下报告漏测、错误目标关联、误差与延迟。
+
+这是编辑提出的试点建议，不是已完成的实验。厂商和软件文档说明了上述处理原理；本篇没有报告实验性体育数据集或经过验证的析微探物产品性能。
+
+有用的传感器规格，应把硬件、采集配置、处理与最终测量联系起来。下一篇将讨论体育雷达的测量精度，包括分辨率、重复性与误差来源。
+
+[阅读第 4 篇：体育雷达到底能检测什么？](/insights/what-can-sports-radar-actually-detect)
+
+## 参考资料与延伸阅读
+
+1. [Texas Instruments: The fundamentals of millimeter wave radar sensors](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf).
+2. [Infineon: Understanding FMCW radars](https://community.infineon.com/t5/Knowledge-Base-Articles/Understanding-FMCW-radars/ta-p/1089561).
+3. [Analog Devices: How to Build a 24 GHz FMCW Radar System](https://www.analog.com/en/resources/technical-articles/how-to-build-a-24-ghz-fmcw-radar-system.html).
+4. [MathWorks: Radar Data Cube](https://www.mathworks.com/help/phased/gs/radar-data-cube.html).
+5. [Texas Instruments: Programming Chirp Parameters in TI Radar Devices](https://www.ti.com/lit/an/swra553a/swra553a.pdf).

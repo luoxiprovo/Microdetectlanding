@@ -1,0 +1,95 @@
+export const meta = {
+  "title": "Inside an FMCW Radar Sensor",
+  "description": "Follow an FMCW sensor from chirp generation and mixing to ADC samples and digital processing. Explore frame timing, data formats, a raw-data budget, and sports-pilot requirements.",
+  "coverImage": "/insights/en-inside-fmcw-radar-sensor.png",
+  "date": "2026-11-23",
+  "category": "Sports Radar",
+  "tags": [
+    "sports radar",
+    "FMCW",
+    "signal processing",
+    "ADC",
+    "chirp configuration"
+  ],
+  "readingTime": "7 min read"
+};
+
+# Inside an FMCW Radar Sensor
+
+A radar sensor may fit on a small circuit board, but the speed displayed during a training session passes through several stages first. A frequency source creates a waveform, antennas transmit and receive it, analog electronics prepare the return, and software turns samples into estimated target information.
+
+Edition 5 opens that measurement chain. Understanding the blocks helps a coach or product team ask why a configuration works for one drill and needs different settings for another.
+
+## 1. The synthesizer creates the chirp
+
+FMCW means frequency-modulated continuous wave. A common waveform is a chirp whose frequency rises approximately linearly during a sweep. The synthesizer generates this changing frequency, and the transmit path sends the signal through an antenna.
+
+TI’s [fundamentals white paper](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf) explains how a copy of the generated signal also supplies the receiver’s mixer. That reference lets the receiver compare the returning echo with the transmitted waveform.
+
+The carrier frequency and sweep bandwidth are different parameters. A frequency-band label alone does not specify the waveform, antenna geometry, or supported sports measurement.
+
+## 2. The receiver mixes the echo with a reference
+
+The receive antenna collects reflections. For a simplified stationary target, the return is a delayed copy of the outgoing chirp. Mixing it with the reference produces a lower-frequency beat signal carrying range information. Motion also contributes to the signal, so moving-target processing needs to account for that contribution.
+
+Infineon’s [FMCW explanation](https://community.infineon.com/t5/Knowledge-Base-Articles/Understanding-FMCW-radars/ta-p/1089561) describes the intermediate-frequency, or IF, path and subsequent digitization. The IF signal is an electrical waveform, not yet a ball-speed reading.
+
+For a sports pilot, ask whether the receiver is configured for the intended target and measurement volume. A useful circuit diagram should show both the echo path and the reference entering the mixer; a receiver does not extract range simply by listening to an arbitrary radio return.
+
+## 3. Filters and the ADC prepare digital samples
+
+Analog filtering and amplification prepare the mixer output for the analog-to-digital converter, or ADC. The ADC samples the downconverted signal. It does not need to digitize the millimeter-wave carrier directly in this architecture.
+
+The [Analog Devices system-design article](https://www.analog.com/en/resources/technical-articles/how-to-build-a-24-ghz-fmcw-radar-system.html) discusses the relationship between the analog signal chain, ADC bandwidth, sampling, and processing load. It is a 24 GHz design example; the receive-chain concepts are relevant here, but its component choices are not a prescription for a millimeter-wave sports device.
+
+Check the actual output format. Some receivers produce real-valued samples; others expose complex I/Q samples. Bit depth, channel count, filtering, and sample timing affect what the downstream software receives. “Raw data” needs a documented definition.
+
+## 4. Software processes three useful dimensions
+
+A sequence of samples can be organized as a radar data cube. MathWorks’ [data-cube guide](https://www.mathworks.com/help/phased/gs/radar-data-cube.html) separates fast time, slow time, and spatial sampling. Applied to a suitable multi-chirp FMCW configuration:
+
+- **Samples within a chirp:** frequency analysis of the beat signal provides range information.
+- **Repeated chirps over time:** coherent processing supports Doppler estimation. The effective timing must match the transmitter schedule and processing method.
+- **Antenna channels:** spatial processing supports direction estimation when the array and calibration permit it.
+
+These axes are different from the final point cloud’s x, y, and z coordinates. A data cube is an organization of signal samples; a point cloud is already a processed output.
+
+Detection selects candidate returns. Tracking then associates observations across time. A training metric requires another defined calculation or model. Those later stages may run on the sensor or a connected processor, depending on the design.
+
+## 5. A frame is a measurement schedule
+
+Chirps are grouped into frames. A sports system must decide how many samples and chirps to collect, how to schedule transmitters, and when to process and export results.
+
+TI’s [chirp-programming application note](https://www.ti.com/lit/an/swra553a/swra553a.pdf) explains tradeoffs among range, velocity, timing, and memory. Chirp timing influences unambiguous velocity; observation duration influences velocity resolution. Copying a demonstration configuration without checking these requirements can produce a configuration unsuitable for the intended drill.
+
+Ask for the active observation duration, frame period, output rate, and end-to-end latency separately. A new message arriving does not necessarily mean a new independent observation, and the time between chirps is not the same as the time between displayed results.
+
+## A hypothetical data-budget example
+
+Suppose a design stores 256 samples per chirp from four receive channels over 64 chirps. If each sample is one 16-bit real value, that is `256 × 4 × 64 × 2 = 131,072 bytes`, or **128 KiB per frame**, before metadata and processing buffers. At 20 frames per second, the sample payload alone is about **2.62 MB/s** using decimal megabytes.
+
+If each sample instead contains separate 16-bit I and Q values, the payload doubles. These are illustrative storage calculations, not a proposed waveform configuration, a chip specification, or a benchmark. They show why exporting raw samples and exporting a short target list impose different communication requirements.
+
+## Use the block diagram to plan a sports pilot
+
+Consider a proposed single-lane ball-speed drill. Before collecting data, our recommended review would connect each requirement to the relevant block:
+
+1. **Target and geometry:** identify the ball, distances, directions, and installation that the antenna and receiver must support.
+2. **Waveform:** document the intended radial-speed range, range resolution, chirp schedule, and effective observation bandwidth.
+3. **Acquisition:** retain the sample format, gain and filter settings, calibration, and configuration version.
+4. **Processing and output:** define the detection, track, and speed metric; preserve validity flags and timestamps.
+5. **Acceptance:** compare with a synchronized, suitable reference and report misses, wrong-target selections, error, and latency under representative conditions.
+
+This is an editorial pilot proposal, not a reported experiment. Manufacturer and software documentation establish the processing principles above; no experimental sports dataset or validated MicroDetect product performance is claimed in this edition.
+
+A useful sensor specification connects hardware, acquisition settings, processing, and the final measurement. Next in this series: understanding radar accuracy in sports, including resolution, repeatability, and sources of error.
+
+[Read edition 4: What Can Sports Radar Actually Detect?](/insights/en-what-can-sports-radar-actually-detect)
+
+## Sources and further reading
+
+1. [Texas Instruments: The fundamentals of millimeter wave radar sensors](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf).
+2. [Infineon: Understanding FMCW radars](https://community.infineon.com/t5/Knowledge-Base-Articles/Understanding-FMCW-radars/ta-p/1089561).
+3. [Analog Devices: How to Build a 24 GHz FMCW Radar System](https://www.analog.com/en/resources/technical-articles/how-to-build-a-24-ghz-fmcw-radar-system.html).
+4. [MathWorks: Radar Data Cube](https://www.mathworks.com/help/phased/gs/radar-data-cube.html).
+5. [Texas Instruments: Programming Chirp Parameters in TI Radar Devices](https://www.ti.com/lit/an/swra553a/swra553a.pdf).

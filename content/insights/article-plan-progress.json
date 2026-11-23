@@ -5,7 +5,7 @@
   "weeklyBatchSize": 2,
   "weeklyBatchRule": "Publish the next pending topic in activeProgram first: one Chinese and one English MDX article, each with a PNG cover. Preserve topics 1–36 as a deferred backlog. Do not backfill or publish that backlog during this 52-edition sports program. Skip a topic only when both language files and covers exist and completion is recorded. Stop when all 52 sports editions are complete.",
   "contentDirectory": "content/insights",
-  "updatedAt": "2026-11-16",
+  "updatedAt": "2026-11-23",
   "completedFiles": [
     {
       "topicId": 1,
@@ -366,6 +366,26 @@
       "coverImage": "/insights/en-what-can-sports-radar-actually-detect.png",
       "coverWorkflow": "deterministic-processing-diagram",
       "program": "sports-radar-52-week-v2"
+    },
+    {
+      "topicId": 41,
+      "language": "zh-CN",
+      "file": "inside-fmcw-radar-sensor.mdx",
+      "title": "走进 FMCW 雷达传感器",
+      "completedAt": "2026-11-23",
+      "coverImage": "/insights/inside-fmcw-radar-sensor.png",
+      "coverWorkflow": "deterministic-signal-chain-diagram",
+      "program": "sports-radar-52-week-v2"
+    },
+    {
+      "topicId": 41,
+      "language": "en",
+      "file": "en-inside-fmcw-radar-sensor.mdx",
+      "title": "Inside an FMCW Radar Sensor",
+      "completedAt": "2026-11-23",
+      "coverImage": "/insights/en-inside-fmcw-radar-sensor.png",
+      "coverWorkflow": "deterministic-signal-chain-diagram",
+      "program": "sports-radar-52-week-v2"
     }
   ],
   "topics": [
@@ -716,8 +736,11 @@
       "week": 5,
       "zhTitle": "走进 FMCW 雷达传感器",
       "enTitle": "Inside an FMCW Radar Sensor",
-      "status": "pending",
-      "program": "sports-radar-52-week-v2"
+      "status": "completed",
+      "program": "sports-radar-52-week-v2",
+      "completedAt": "2026-11-23",
+      "zhFile": "inside-fmcw-radar-sensor.mdx",
+      "enFile": "en-inside-fmcw-radar-sensor.mdx"
     },
     {
       "id": 42,
@@ -1109,8 +1132,8 @@
     "editionCount": 52,
     "scope": "The approved 52-week sports radar plan, published before the preserved industrial backlog.",
     "startedAt": "2026-11-01",
-    "completedEditions": 4,
-    "nextTopicId": 41
+    "completedEditions": 5,
+    "nextTopicId": 42
   },
   "archivedSportsRadarPrograms": [
     {
